@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=860">
+<title>이력서·자기소개서</title>
+<style>
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard_400.ttf') format('truetype');font-weight:400}
+@font-face{font-family:'Pretendard';src:url('fonts/Pretendard_700.ttf') format('truetype');font-weight:700}
+@font-face{font-family:'SUIT';src:url('fonts/SUIT_900.ttf') format('truetype');font-weight:900}
+@page{size:A4 portrait;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* ===== 테마 색 (강조색 1 + 보조색 1) ===== */
+:root{--ink:#1d1f27;--mut:#525866;--faint:#8a90a0}
+body[data-theme="a"]{--acc:#5b4bc4;--sub:#efecfd;--line:#e3dff5;--desk:#f4f2fb}
+body[data-theme="b"]{--acc:#5b4bc4;--sub:#efecfd;--line:#e3dff5;--desk:#f4f2fb}
+body[data-theme="c"]{--acc:#c2551a;--sub:#fff0dd;--line:#efdfca;--desk:#faf5ee}
+
+body{background:var(--desk);color:var(--ink);font-family:'Pretendard',sans-serif;font-size:10.5px;line-height:1.55;letter-spacing:-0.02em;word-break:keep-all;-webkit-font-smoothing:antialiased}
+
+/* ===== 고르기 막대 ===== */
+.bar{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:10px;justify-content:center;padding:12px 16px;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);font-size:13px}
+.bar button{font:700 13px 'Pretendard';padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.bar button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.bar .note{color:var(--mut);font-size:12px}
+.pages{display:flex;flex-direction:column;align-items:center;gap:28px;padding:28px 0 60px}
+.page{width:794px;height:1123px;background:#fff;box-shadow:0 4px 18px rgba(30,30,60,.08);border:1px solid var(--line);overflow:hidden;position:relative}
+.tag{font:700 11px 'Pretendard';color:var(--mut);margin-bottom:-18px;width:794px}
+@media print{.bar,.tag{display:none}body{background:#fff}.pages{padding:0;gap:0}.page{box-shadow:none;border:none;page-break-after:always}}
+
+/* ===== 공통 조각 ===== */
+.ttl{font-family:'SUIT',sans-serif;font-weight:900;font-size:13.5px;color:var(--acc);letter-spacing:-0.01em;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ttl::after{content:"";flex:1;height:1.5px;background:var(--line)}
+.ttl small{font:700 9.5px 'Pretendard';color:var(--faint)}
+.ico{width:17px;height:17px;object-fit:contain;flex-shrink:0}
+.sk{display:inline-flex;align-items:center;gap:5px;padding:3.5px 9px 3.5px 6px;border-radius:6px;background:var(--sub);font-size:10.4px;font-weight:700;color:var(--ink);white-space:nowrap}
+.sk.t{padding-left:7px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.stat{display:flex;gap:7px;margin:7px 0}
+.stat div{flex:1;border:1px solid var(--line);border-radius:7px;padding:4px 8px;background:#fff}
+.stat b{display:block;font-family:'SUIT';font-weight:900;font-size:17px;color:var(--acc);line-height:1.2}
+.stat span{font-size:9.6px;color:var(--mut)}
+ul.dash{list-style:none;display:flex;flex-direction:column;gap:3px}
+ul.dash li{padding-left:12px;position:relative;color:var(--mut);font-size:10.8px}
+ul.dash li::before{content:"";position:absolute;left:1px;top:7.5px;width:4px;height:4px;border-radius:50%;background:var(--acc)}
+ul.dash li b{color:var(--ink)}
+a{color:var(--acc);text-decoration:none}
+
+/* ===== 이력서 ===== */
+.resume{display:grid;column-gap:24px;row-gap:21px;padding:40px 44px;height:100%;align-content:start}
+.r-head{grid-area:head;display:flex;gap:18px;align-items:center}
+.r-head img.photo{width:100px;height:128px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.r-name{font-family:'SUIT';font-weight:900;font-size:32px;line-height:1.1}
+.r-role{display:inline-block;margin:6px 0 5px;padding:3px 10px;border-radius:999px;background:var(--sub);color:var(--acc);font-weight:700;font-size:11px}
+.r-line{font-size:14.5px;font-weight:700;line-height:1.45}
+.r-line em{font-style:normal;color:var(--acc)}
+.r-contact{display:flex;flex-wrap:wrap;gap:3px 14px;margin-top:8px;font-size:10.6px;color:var(--mut)}
+.r-story{grid-area:story}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.step{border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:#fff;position:relative}
+.step b{display:block;font-size:12px;margin-bottom:2px}
+.step b i{font-style:normal;font-family:'SUIT';font-weight:900;color:var(--acc);margin-right:5px}
+.step span{font-size:10.4px;color:var(--mut);line-height:1.45;display:block}
+.r-skills{grid-area:skills}
+.skrows{display:grid;grid-template-columns:1.2fr 1fr;gap:9px 20px}
+.skrow{display:grid;grid-template-columns:62px 1fr;gap:6px;align-items:start}
+.skrow>span{font-size:10.4px;font-weight:700;color:var(--mut);padding-top:3px}
+.r-proj{grid-area:proj}
+.proj{border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin-bottom:10px;background:#fff}
+.proj:last-child{margin-bottom:0}
+.p-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.p-top b{font-size:13.5px}
+.p-top span{font-size:10px;color:var(--faint);white-space:nowrap}
+.p-role{font-size:10.8px;margin:3px 0 5px}
+.p-role b{color:var(--acc)}
+.r-career{grid-area:career}
+.r-edu{grid-area:edu}
+.rows{display:flex;flex-direction:column;gap:7px}
+.row{display:flex;justify-content:space-between;gap:8px;font-size:10.8px}
+.row b{font-weight:700}
+.row span{color:var(--faint);font-size:9.2px;white-space:nowrap}
+.row small{display:block;color:var(--mut);font-size:10px;font-weight:400}
+
+/* a · 1단 깔끔 */
+body[data-theme="a"] .resume{grid-template-columns:1fr 1fr;grid-template-areas:"head head" "story story" "skills skills" "proj proj" "career edu"}
+body[data-theme="a"] .r-head{padding-bottom:14px;border-bottom:2px solid var(--acc)}
+
+/* c · 위쪽 색 띠 + 흐름 */
+body[data-theme="c"] .resume{grid-template-columns:1fr 1fr;grid-template-areas:"head head" "story story" "skills skills" "proj proj" "career edu";padding-top:0}
+body[data-theme="c"] .r-head{margin:0 -40px;padding:26px 40px 22px;background:var(--sub);flex-direction:row-reverse;justify-content:space-between}
+body[data-theme="c"] .r-role{background:#fff}border-radius:50%;width:108px;height:108px;border:4px solid #fff}
+body[data-theme="c"] .ttl{display:inline-flex;background:var(--acc);color:#fff;padding:3px 11px;border-radius:999px;font-size:11.5px}
+body[data-theme="c"] .ttl::after{display:none}
+body[data-theme="c"] .ttl small{color:#ffe7cf}
+body[data-theme="c"] .step:not(:last-child)::after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--acc);font-weight:900;background:#fff;font-size:12px}
+body[data-theme="c"] .proj{border:none;border-left:3px solid var(--acc);border-radius:0 10px 10px 0;background:#fffaf4}
+
+/* ===== 자기소개서 ===== */
+.cl{padding:42px 50px 36px;display:flex;flex-direction:column;gap:22px;height:100%}
+.cl-head{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:12px;border-bottom:2px solid var(--acc)}
+.cl-head h1{font-family:'SUIT';font-weight:900;font-size:24px;line-height:1.1}
+.cl-head h1 small{font:700 12px 'Pretendard';color:var(--acc);margin-left:8px}
+.cl-head div{font-size:9.6px;color:var(--mut);text-align:right}
+.run{display:flex;justify-content:space-between;font-size:9.2px;color:var(--faint);padding-bottom:6px;border-bottom:1px solid var(--line)}
+.q{display:flex;flex-direction:column;gap:9px}
+.q-lab{font:700 10.8px 'Pretendard';color:var(--acc);display:flex;align-items:center;gap:6px}
+.q-lab i{font-style:normal;font-family:'SUIT';font-weight:900;background:var(--acc);color:#fff;border-radius:5px;padding:0 5px;font-size:9.5px}
+.q-head{font-size:16.5px;font-weight:700;line-height:1.4}
+.q p{color:#3b404c;font-size:11.6px;line-height:1.78}
+.q p b{color:var(--ink)}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.card b{display:block;font-size:12.2px;margin-bottom:5px}
+.card b i{font-style:normal;font-family:'SUIT';font-weight:900;color:var(--acc);margin-right:4px}
+.card span{font-size:10.9px;color:var(--mut);line-height:1.65;display:block}
+.tech{display:flex;flex-direction:column;gap:7px}
+.tech>div{display:grid;grid-template-columns:96px 1fr 1fr;gap:12px;align-items:center;border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff}
+.tech>div>b{font-size:11.2px}
+.tech>div>span{font-size:10.6px;color:var(--mut)}
+.pcards{display:flex;flex-direction:column;gap:10px}
+.pc{display:grid;grid-template-columns:1fr 290px;gap:14px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.pc.noimg{grid-template-columns:1fr}
+.pc .pics{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;align-content:start}
+.pc .pics img{width:100%;height:92px;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:var(--sub)}
+.pc .pics.one{grid-template-columns:1fr}
+.pc .pics.one img{height:150px;object-fit:contain;background:#11151c}
+.cap{font-size:8.4px;color:var(--faint);grid-column:1/-1;text-align:right}
+.star{display:grid;grid-template-columns:64px 1fr;gap:4px 10px;font-size:10.9px;margin-top:6px;line-height:1.6}
+.star b{color:var(--acc);font-size:10.6px}
+.star span{color:#3b404c}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.flow>div{position:relative;border-radius:10px;background:var(--sub);padding:10px 12px}
+.flow>div:not(:last-child)::after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--acc);font-weight:900;font-size:13px}
+.flow i{font-style:normal;font-family:'SUIT';font-weight:900;color:var(--acc);font-size:11px;margin-right:4px}
+.flow b{font-size:11.6px}
+.flow span{display:block;font-size:10px;color:var(--mut);margin-top:2px;line-height:1.5}
+body[data-theme="b"] .flow>div{background:#fff;border:1px solid var(--line)}
+.after{border-radius:10px;background:var(--sub);padding:13px 16px}
+.after b{display:block;color:var(--acc);font-size:11.8px;margin-bottom:2px}
+.after span{font-size:11.2px;color:#3b404c;line-height:1.7}
+
+
+body[data-theme="b"] .q-lab i{background:none;color:var(--acc);padding:0}
+body[data-theme="b"] .q{padding-left:12px;border-left:3px solid var(--line)}
+body[data-theme="c"] .q-head{display:inline;background:linear-gradient(transparent 62%,var(--sub) 62%)}
+body[data-theme="c"] .card,body[data-theme="c"] .pc,body[data-theme="c"] .tech>div{background:#fffaf4;border-color:transparent}
+/* ===== 확정: b 2단 + 라벤더 ===== */
+.resume{display:grid;grid-template-columns:226px 1fr;padding:0;gap:0;background:linear-gradient(90deg,var(--sub) 226px,#fff 226px)}
+.r-side{padding:30px 20px 24px;display:flex;flex-direction:column;gap:20px}
+.r-main{padding:30px 30px 24px 26px;display:flex;flex-direction:column;gap:18px}
+.r-side .r-head{flex-direction:column;align-items:flex-start;gap:10px}
+.r-side .r-line{font-size:11.5px}
+.r-side .r-contact{flex-direction:column;gap:2px}
+.r-side .skrows{grid-template-columns:1fr;gap:9px}
+.r-side .skrow{grid-template-columns:1fr}
+.r-side .sk{background:#fff}
+.r-main .steps{grid-template-columns:1fr;gap:6px}
+.r-main .step{display:grid;grid-template-columns:150px 1fr;gap:8px;align-items:center;padding:7px 11px}
+.pc.star2{grid-template-columns:1fr 112px;align-items:start}
+.pc.star2 img.wide{width:100%;margin-top:8px;border-radius:6px;display:block}
+.pc.star2 img.tall{width:112px;border-radius:6px;display:block}
+body[data-theme="b"] .cl-head{border-bottom:none;background:var(--sub);margin:-42px -50px 0;padding:28px 50px 16px}.r-main{gap:27px;padding-top:36px}
+.r-side{gap:28px;padding-top:36px}
+.r-side .skrows{gap:14px}
+.r-main .proj{padding:14px 16px;margin-bottom:13px}
+.r-main ul.dash{gap:5px}
+.r-main .step{padding:10px 12px}
+.r-main .steps{gap:8px}
+.r-main .rows{gap:11px}
+/* 10-29 12:4x 동업자: 선 진하게 · 박스 더 · 이름 작게 · 지원 분야 줄 맞춤 */
+body[data-theme="b"]{--line:#c9c0ec}
+.ttl::after{height:2px;background:#d6cff3}
+.r-name{font-size:25px}
+.r-side .r-role{display:block;background:none;padding:0;margin:7px 0 6px;font-size:11.5px}
+.r-side .r-line{background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:11.3px}
+.r-side .r-contact{background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-top:9px;gap:3px;color:var(--ink)}
+.r-side .skrow>span{color:var(--acc)}
+.r-side .sk{border:1px solid var(--line)}
+.step,.proj,.card,.pc,.tech>div,.stat div{box-shadow:0 1px 3px rgba(60,50,140,.07)}
+.r-main .step{padding:8px 12px;grid-template-columns:170px 1fr}
+.r-main .rows{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 15px;box-shadow:0 1px 3px rgba(60,50,140,.07)}
+.r-main .row+.row{padding-top:9px;border-top:1px dashed var(--line)}
+.card.txt{padding:13px 16px;display:flex;flex-direction:column;gap:8px}
+.card.txt b{display:inline;font-size:inherit;margin:0}
+.r-main{gap:22px}
+.r-main .step b{margin:0;line-height:1.45}
+.flow{grid-template-columns:repeat(3,1fr)}
+/* 자소서 글 줄인 뒤 빈 곳 채우기 */
+.cl{gap:27px}
+.q{gap:11px}
+.q p,.card.txt p{font-size:12.2px;line-height:1.85}
+.card span{font-size:11.4px}
+.tech>div{padding:12px 14px}
+.tech>div>span{font-size:11.2px}
+.after span{font-size:11.8px}
+.star{font-size:11.4px}
+.page:last-child .cl{gap:22px}
+.page:last-child .q{gap:9px}
+.page:last-child .pcards{gap:8px}
+.page:last-child .star{line-height:1.5;gap:2px 10px}
+.page:last-child .card{padding:10px 14px}
+.stat.wm{align-items:stretch}
+.stat.wm img{flex:none;width:62px;height:62px;object-fit:cover;object-position:center 15%;border-radius:7px;border:1px solid var(--line);background:var(--sub)}
+.stat.wm img.ad{width:96px;object-position:center}
+.r-main .proj{margin-bottom:10px;padding:12px 16px}
+body[data-theme="b"] .q{border-left-color:#d6cff3}
+/* ===== 확정 꾸미기 c (10-29): 라벤더 + 버터 · 카드 색 번갈아 ===== */
+body[data-theme="b"]{--sub2:#fff2c2;--acc2:#9a6b00}
+body[data-theme="b"] .r-side{background:radial-gradient(circle,rgba(91,75,196,.13) 1.1px,transparent 1.6px) 0 0/14px 14px}
+body[data-theme="b"] .proj,body[data-theme="b"] .pc,body[data-theme="b"] .tech>div{border-top:5px solid var(--acc)}
+body[data-theme="b"] .steps .step,body[data-theme="b"] .cards3 .card{background:var(--sub);border-color:transparent}
+body[data-theme="b"] .stat div{background:var(--sub2);border-color:transparent}
+body[data-theme="b"] .stat b{color:var(--acc2)}
+body[data-theme="b"] .flow>div:nth-child(2){background:var(--sub2);border-color:transparent}
+body[data-theme="b"] .flow>div:nth-child(odd){background:var(--sub);border-color:transparent}
+body[data-theme="b"] .after{background:var(--sub2)}
+body[data-theme="b"] .after b{color:var(--acc2)}
+body[data-theme="b"] .q-lab{color:var(--acc2)}
+body[data-theme="b"] .q-lab i{color:var(--acc2)}
+
+/* 10-29 동업자: 자소서 흐름·강점 = 색 없이 흰 박스 + 제목 밑 선 */
+body[data-theme="b"] .flow>div,body[data-theme="b"] .flow>div:nth-child(odd),body[data-theme="b"] .flow>div:nth-child(2),
+body[data-theme="b"] .cards3 .card{background:#fff;border:1.5px solid var(--line)}
+body[data-theme="b"] .flow span{border-top:1px solid var(--line);padding-top:6px;margin-top:6px}
+body[data-theme="b"] .cards3 .card b{padding-bottom:6px;margin-bottom:7px;border-bottom:1px solid var(--line)}
+/* 11-02 스타2 칸 뺀 뒤 3쪽 빈 곳 채우기 (글 추가 없음) */
+.page:last-child .cl{gap:30px}
+.page:last-child .q{gap:12px}
+.page:last-child .q-head{font-size:18px}
+.page:last-child .pcards{gap:12px}
+.page:last-child .pc{padding:16px 18px}
+.page:last-child .p-top b{font-size:14.5px}
+.page:last-child .p-top span{font-size:10.5px}
+.page:last-child .pc p{font-size:12.4px !important;line-height:1.85 !important;margin-top:8px !important}
+.page:last-child .pc .pics img{height:118px}
+.page:last-child .stat{margin:12px 0 0}
+.page:last-child .stat div{padding:8px 10px}
+.page:last-child .card{padding:14px 18px}
+.page:last-child .card b{font-size:13px;margin-bottom:7px}
+.page:last-child .card span{font-size:12.2px;line-height:1.8}
+.page:last-child .star{font-size:12.2px;line-height:1.75;gap:5px 12px}
+/* 11-02 창신대 줄 추가로 1쪽 간격 조정 */
+.r-main{gap:16px;padding-top:26px}
+/* 사이트용 */
+.bar,.tag{display:none}
+.home{position:fixed;left:14px;top:14px;z-index:20;background:#fff;border:2px solid #1d1f27;border-radius:999px;padding:7px 14px;font:700 13px 'Pretendard';color:#1d1f27;text-decoration:none;box-shadow:2px 3px 0 #1d1f27}
+@media print{.home{display:none}}
+</style>
+</head>
+<body data-theme="b"><a class="home" href="../">← 처음으로</a>
+
+<div class="bar"><button class="on">확정 · 2단 왼쪽 띠 + 라벤더</button><span class="note">글은 초안 · 고칠 곳 알려 주세요</span></div>
+
+<div class="pages">
+
+
+<div class="tag">이력서 · 1쪽</div>
+<div class="page">
+ <div class="resume">
+ <aside class="r-side">
+  <header class="r-head">
+   <img class="photo" src="증명사진.jpg" alt="증명사진">
+   <div>
+    <div class="r-name">최지성</div>
+    <div class="r-role">지원 분야 · UI 개발자 (프론트엔드)</div>
+    <div class="r-line">불편한 화면을 겪어 본 사람으로서,<br><em>쓰기 편한 화면</em>을<br>디자인하고 구현합니다</div>
+    <div class="r-contact"><span>2003년생 (만 23세)</span><a href="https://github.com/humancjs">github.com/humancjs</a><span>인천시</span></div>
+   </div>
+  </header>
+  <section class="r-skills">
+   <div class="ttl">주요 기술</div>
+   <div class="skrows">
+    <div class="skrow"><span>화면</span><div class="chips"><span class="sk"><img class="ico" src="아이콘/html5-original.svg" alt="">HTML5</span><span class="sk"><img class="ico" src="아이콘/css3-original.svg" alt="">CSS3</span><span class="sk"><img class="ico" src="아이콘/javascript-original.svg" alt="">JavaScript</span></div></div>
+    <div class="skrow"><span>디자인 · AI 제작</span><div class="chips"><span class="sk"><img class="ico" src="아이콘/figma-original.svg" alt="">Figma</span><span class="sk"><img class="ico" src="아이콘/gemini-color.png" alt="">Gemini</span><span class="sk"><img class="ico" src="아이콘/google-original.svg" alt="">Flow (Veo)</span><span class="sk"><img class="ico" src="아이콘/google-original.svg" alt="">AI Studio</span></div></div>
+    <div class="skrow"><span>언어</span><div class="chips"><span class="sk"><img class="ico" src="아이콘/java-original.svg" alt="">Java</span><span class="sk"><img class="ico" src="아이콘/python-original.svg" alt="">Python</span></div></div>
+    <div class="skrow"><span>서버·DB</span><div class="chips"><span class="sk"><img class="ico" src="아이콘/spring-original.svg" alt="">Spring Boot</span><span class="sk"><img class="ico" src="아이콘/mariadb-original.svg" alt="">MariaDB</span></div></div>
+    <div class="skrow"><span>개발 도구</span><div class="chips"><span class="sk">VS Code</span><span class="sk">Eclipse</span><span class="sk">IntelliJ IDEA</span></div></div>
+    <div class="skrow"><span>협업</span><div class="chips"><span class="sk"><img class="ico" src="아이콘/git-original.svg" alt="">Git</span><span class="sk"><img class="ico" src="아이콘/github-original.svg" alt="">GitHub</span><span class="sk"><img class="ico" src="아이콘/slack-original.svg" alt="">Slack</span></div></div>
+   </div>
+  </section>
+ </aside>
+ <main class="r-main">
+  <section class="r-story">
+   <div class="ttl">핵심 강점</div>
+   <div class="steps">
+    <div class="step"><b><i>01</i>사용자 시점에서 생각</b><span>필요한 화면을 찾기 어려운 상황을 직접 겪어, 버튼과 이동 경로가 잘 보이는 화면을 고민</span></div>
+    <div class="step"><b><i>02</i>팀원과 빠르고 정확한 소통</b><span>Slack으로 전달받은 업무를 빠르게 확인하고, 목업으로 페이지를 먼저 보여 주며 팀원들과 맞춰 감</span></div>
+    <div class="step"><b><i>03</i>그림에서 영상까지</b><span>AI 도구를 활용해 캐릭터 그림과 광고 영상까지 제작</span></div>
+   </div>
+  </section>
+  <section class="r-proj">
+   <div class="ttl">대표 프로젝트 · 담당 역할 및 기여</div>
+   <div class="proj">
+    <div class="p-top"><b>Weather Mate · 날씨 캐릭터 생활정보 웹</b><span>팀 6명 · 2026.10.13 ~ 10.20</span></div>
+    <div class="p-role"><b>담당</b> 캐릭터 제작 · PPT · 광고 영상</div>
+    <div class="stat wm"><div><b>36벌</b><span>사계절 캐릭터 착장</span></div><div><b>53초</b><span>광고 영상</span></div><img src="사진_정리/3_캐릭터_봄_기본포즈.png" alt="캐릭터 봄"><img src="사진_정리/5_캐릭터_비오는날.png" alt="캐릭터 비 오는 날"><img class="ad" src="사진_정리/7_광고영상_앱화면_눈오는날.jpg" alt="광고 영상 장면"></div>
+    <ul class="dash">
+     <li>날씨에 따라 옷차림이 바뀌는 <b>캐릭터 착장 36벌</b>을 제작하고, 발표 <b>PPT</b>를 제작</li>
+     <li>팀원의 홈페이지 배경과 캐릭터 그림 분위기가 달라 <b>서로 맞춰 다시 제작</b></li>
+     <li>광고 영상: Flow(Veo)로 장면, <b>AI Studio 음성 API로 대사</b> 제작 (AI 생성 영상 포함)</li>
+    </ul>
+   </div>
+   <div class="proj">
+    <div class="p-top"><b>사내 그룹웨어</b><span>팀 6명 · 2026.09.11 ~ 09.18</span></div>
+    <div class="p-role"><b>담당</b> 게시판 · 관리자 페이지 (화면 + 기능 구현)</div>
+    <ul class="dash">
+     <li>공지·자유·부서 등 <b>12개 게시판 카테고리</b>별 읽기·쓰기 권한 구현 · 최신순 정렬과 5쪽 단위 페이지 나누기</li>
+     <li>화면에서 버튼만 숨기지 않고 <b>서버에서도 권한 확인</b> (댓글·첨부파일) · 테스트 계정 6개로 확인</li>
+     <li><b>관리자 페이지</b>: 직원 계정(관리자 지정·해제) · 부서(이동·추가·삭제) · 직급(변경·순서) 관리 기능</li>
+     <li>바꾸기 전 <b>확인 창</b> · 관리자가 아니면 안내 메시지 · <b>마이페이지</b>(내 연락처 직접 수정)</li>
+    </ul>
+   </div>
+  </section>
+  <section class="r-career">
+   <div class="ttl">경력</div>
+   <div class="rows">
+    <div class="row"><div><b>쇼핑엔티 고객센터 상담</b><small>쇼핑엔티 소속 · 계약직</small></div><span>2024.12 ~ 2025.03</span></div>
+    <div class="row"><div><b>배달의민족 고객센터 상담</b><small>제니엘 소속 · 계약직</small></div><span>2024.03 ~ 2024.07</span></div>
+   </div>
+  </section>
+  <section class="r-edu">
+   <div class="ttl">학력 · 자격 · 해외</div>
+   <div class="rows">
+    <div class="row"><div><b>서울디지털대학교 AI소프트웨어공학과</b><small>재학 중 · 디자인 복수전공 준비 (2027 신청 예정)</small></div><span>2024.07 ~</span></div>
+    <div class="row"><div><b>창신대학교 중국비즈니스 전공</b><small>자퇴</small></div><span>2022.03 ~ 2022.12</span></div>
+    <div class="row"><div><b>진해용원고등학교</b><small>졸업</small></div><span>2019.03 ~ 2022.02</span></div>
+    <div class="row"><div><b>K-디지털 트레이닝 자바 풀스택 과정</b></div><span>2026.06 ~ 12</span></div>
+    <div class="row"><div><b>MOS Excel Associate · JPT 620점 (2023.07)</b><small>일본 워킹홀리데이 3개월 · 호주 워킹홀리데이 1개월</small></div></div>
+   </div>
+  </section>
+ </main>
+ </div>
+</div>
+
+
+<div class="tag">자기소개서 · 1쪽</div>
+<div class="page">
+ <div class="cl">
+  <div class="cl-head">
+   <h1>최지성<small>자기소개서 · UI 개발자 (프론트엔드)</small></h1>
+   <div>github.com/humancjs</div>
+  </div>
+
+  <div class="flow">
+   <div><i>1</i><b>고객센터 상담</b><span>상담 전산도, 이용자가 보는 화면도 불편했음</span></div>
+   <div><i>2</i><b>UI·UX에 관심</b><span>이 불편함을 해결하고 싶어 쉬운 구조와 편안한 화면을 고민</span></div>
+   <div><i>3</i><b>AI를 활용해 제작</b><span>Figma로 틀을 잡고, AI로 그림·영상과 기능까지 구현</span></div>
+  </div>
+
+  <section class="q">
+   <div class="q-lab"><i>01</i>지원 분야 · 지원 동기</div>
+   <div class="q-head">불편한 화면을 겪어 본 사람이, 쓰기 편한 화면을 만듭니다</div>
+   <div class="card txt"><p>배달의민족 고객센터에서 상담하며 <b>이관 페이지</b>나 <b>조직도에서 담당자</b>를 찾는 일이 늘 어려웠고, 고객들도 「이벤트 페이지가 어디 있나요?」라며 화면에서 길을 잃었습니다. 이 일을 겪으며 중요한 버튼과 이동 경로가 더 잘 보이고, 파란색·남색뿐인 딱딱한 화면보다 편안한 화면을 생각하게 됐습니다.</p>
+   <p>이 경험으로 UI·UX에 관심을 갖게 되었고, 지금은 <b>화면을 디자인하고 기능까지 만드는 UI 개발자</b>를 목표로 자바 풀스택 과정과 팀 프로젝트에서 화면을 만들고 있습니다.</p></div>
+  </section>
+
+  <section class="q">
+   <div class="q-lab"><i>02</i>핵심 강점</div>
+   <div class="q-head">사용자 시점으로 보고, 팀과 맞춰 끝까지 만듭니다</div>
+   <div class="cards3">
+    <div class="card"><b><i>01</i>사용자 시점에서 생각합니다</b><span>필요한 화면을 찾기 어려운 상황을 직접 겪어, 버튼과 이동 경로가 잘 보이는 화면을 고민합니다.</span></div>
+    <div class="card"><b><i>02</i>빠르고 정확하게 소통합니다</b><span>Slack으로 받은 업무를 빠르게 확인하고, 목업으로 먼저 보여 주며 팀원들과 맞춰 갑니다.</span></div>
+    <div class="card"><b><i>03</i>그림에서 영상까지 만듭니다</b><span>AI 도구로 캐릭터 36벌과 53초 광고 영상을 만들었고, 「빠르다」「깔끔하다」는 말을 들었습니다.</span></div>
+   </div>
+  </section>
+
+  <section class="q">
+   <div class="q-lab"><i>03</i>주요 기술</div>
+   <div class="q-head">화면 · 서버 · AI 도구를 함께 씁니다</div>
+   <div class="tech">
+    <div><b>화면 · 디자인</b><div class="chips"><span class="sk"><img class="ico" src="아이콘/html5-original.svg" alt="">HTML5</span><span class="sk"><img class="ico" src="아이콘/css3-original.svg" alt="">CSS3</span><span class="sk"><img class="ico" src="아이콘/javascript-original.svg" alt="">JS</span><span class="sk"><img class="ico" src="아이콘/figma-original.svg" alt="">Figma</span></div><span>그룹웨어 게시판·관리자 페이지 화면을 만들었고, Figma는 학원 실습에서 화면 틀을 잡을 때 썼습니다.</span></div>
+    <div><b>서버 · DB</b><div class="chips"><span class="sk"><img class="ico" src="아이콘/java-original.svg" alt="">Java</span><span class="sk"><img class="ico" src="아이콘/spring-original.svg" alt="">Spring Boot</span><span class="sk"><img class="ico" src="아이콘/mariadb-original.svg" alt="">MariaDB</span><span class="sk"><img class="ico" src="아이콘/python-original.svg" alt="">Python</span></div><span>그룹웨어 게시판·관리자 기능을 만들었습니다.</span></div>
+    <div><b>AI · 협업</b><div class="chips"><span class="sk"><img class="ico" src="아이콘/gemini-color.png" alt="">Gemini</span><span class="sk"><img class="ico" src="아이콘/google-original.svg" alt="">Flow (Veo)</span><span class="sk"><img class="ico" src="아이콘/google-original.svg" alt="">AI Studio</span><span class="sk"><img class="ico" src="아이콘/git-original.svg" alt="">Git</span><span class="sk"><img class="ico" src="아이콘/github-original.svg" alt="">GitHub</span><span class="sk"><img class="ico" src="아이콘/slack-original.svg" alt="">Slack</span></div><span>광고 영상 장면과 대사를 만들고, 팀과 코드를 관리했습니다.</span></div>
+   </div>
+  </section>
+  <div class="after"><b>입사 후</b><span>UI·UX 쪽에서 화면을 만들고 싶습니다. 게임이든 웹이든 UI가 좋아야 사용자가 편합니다. 디자인 공부를 이어 가기 위해 디자인 복수전공도 준비하고 있습니다.</span></div>
+ </div>
+</div>
+
+
+<div class="tag">자기소개서 · 2쪽</div>
+<div class="page">
+ <div class="cl">
+  <div class="run"><span>최지성 · 자기소개서</span><span>2 / 2</span></div>
+
+  <section class="q">
+   <div class="q-lab"><i>04</i>대표 프로젝트</div>
+   <div class="q-head">웹이든 게임이든, 결국 쓰는 사람이 편한 화면</div>
+   <div class="pcards">
+    <div class="pc">
+     <div><div class="p-top"><b>Weather Mate · 날씨 캐릭터 생활정보 웹</b><span>팀 6명 · 2026.10.13 ~ 10.20</span></div>
+      <p style="font-size:11px;color:#3b404c;margin-top:5px;line-height:1.7">날씨에 맞는 옷차림을 캐릭터로 보여 주는 웹입니다. 캐릭터 제작, 발표 PPT, 광고 영상을 맡았습니다.</p>
+      <div class="stat"><div><b>36벌</b><span>캐릭터 착장</span></div><div><b>53초</b><span>광고 영상</span></div></div></div>
+     <div class="pics"><img src="사진_정리/3_캐릭터_봄_기본포즈.png" alt="캐릭터 봄"><img src="사진_정리/4_캐릭터_가을산책.png" alt="캐릭터 가을"><img src="사진_정리/7_광고영상_앱화면_눈오는날.jpg" alt="광고 영상 장면"><img src="사진_정리/8_광고영상_계절룩북.jpg" alt="광고 영상 계절 장면"><span class="cap">캐릭터 · 광고 영상 장면 (AI 생성 영상 포함)</span></div>
+    </div>
+    <div class="pc noimg">
+     <div><div class="p-top"><b>사내 그룹웨어</b><span>팀 6명 · 2026.09.11 ~ 09.18</span></div>
+      <p style="font-size:11px;color:#3b404c;margin-top:5px;line-height:1.7">게시판과 관리자 페이지의 화면과 기능을 만들었습니다. 관리자 페이지에는 직원 계정·부서·직급 관리와 바꾸기 전 확인 창을 넣었고, 직원이 연락처를 직접 고치는 마이페이지도 만들었습니다.</p></div>
+    </div>
+  </section>
+
+  <section class="q">
+   <div class="q-lab"><i>05</i>담당 역할 및 기여</div>
+   <div class="q-head">어긋나면 맞춰서 다시, 마음에 들 때까지 바꿔 봅니다</div>
+   <div class="card">
+    <b>Weather Mate · 캐릭터 제작, PPT, 광고 영상</b>
+    <div class="star">
+     <b>문제 1</b><span>팀원이 만든 배경과 제 캐릭터의 그림 분위기가 달랐습니다.</span>
+     <b>한 일</b><span>서로 기준을 맞춰 다시 만들어 한 화면의 분위기를 맞췄습니다.</span>
+     <b>문제 2</b><span>Flow(Veo)로 만든 대사는 AI 티가 났습니다.</span>
+     <b>한 일</b><span>AI Studio 음성 API로 대사를 다시 만들었습니다.</span>
+     <b>결과</b><span>착장 36벌과 53초 광고 영상을 완성했고, 무엇보다 <strong>나만의 캐릭터라는 창작물</strong>이 생겨 기뻤습니다.</span>
+    </div>
+   </div>
+   <div class="card">
+    <b>사내 그룹웨어 · 게시판, 관리자 페이지</b>
+    <span>화면에서 버튼만 숨겨서는 권한이 지켜지지 않아, 12개 게시판 카테고리의 읽기·쓰기 권한을 댓글·첨부파일까지 서버에서 다시 확인하게 했습니다. 테스트 계정 6개로 확인했습니다.</span>
+   </div>
+   <div class="card"><b>함께 맞춰 가는 방식</b><span>만든 화면은 목업으로 Slack에 계속 공유하고, 팀원들의 의견을 받아 서로 맞춰 가며 완성했습니다.</span></div>
+  </section>
+
+ </div>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(location.search), t=p.get('theme');
+  function set(x){document.body.dataset.theme=x;document.querySelectorAll('.bar button').forEach(function(b){b.classList.toggle('on',b.dataset.t===x)});try{history.replaceState(null,'','?theme='+x)}catch(e){}}
+  document.querySelectorAll('.bar button').forEach(function(b){b.onclick=function(){set(b.dataset.t)}});
+  if(t==='a'||t==='b'||t==='c')set(t);
+  var only=p.get('only');if(only==='1')document.title='이력서';else if(only==='2,3')document.title='자기소개서';if(only){document.querySelector('.bar').style.display='none';document.querySelectorAll('.tag').forEach(function(e){e.style.display='none'});document.querySelectorAll('.page').forEach(function(pg,i){if(only.split(',').indexOf(String(i+1))<0)pg.style.display='none'});document.querySelector('.pages').style.padding='0';document.body.style.background='#fff'}
+  if(p.get('measure')){window.addEventListener('load',function(){
+    var out=[];document.querySelectorAll('.page').forEach(function(pg){
+      var top=pg.getBoundingClientRect().top,max=0;
+      pg.querySelectorAll('*').forEach(function(el){var r=el.getBoundingClientRect();if(r.height>0&&r.width>0&&!el.matches('.resume,.cl'))max=Math.max(max,r.bottom-top)});
+      out.push(Math.round(max));});
+    var m=document.createElement('pre');m.id='measure';m.textContent='MEASURE '+out.join(',');document.body.appendChild(m);});}
+})();
+</script>
+</body>
+</html>
