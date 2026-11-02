@@ -1,0 +1,2 @@
+기술 아이콘 출처: Devicon v2.16.0 (MIT 라이선스) https://github.com/devicons/devicon — 각 로고의 상표권은 해당 회사에 있음
+gemini-color.png: 동업자가 10-26 내려받은 파일(Downloads)
